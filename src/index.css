@@ -1,0 +1,16 @@
+body {
+  padding: 50px;
+}
+.completed {
+  text-decoration: line-through;
+}
+.list-items {
+  padding-left: 20px;
+  list-style: none;
+}
+.todoList {
+  margin: 20px 0px;
+}
+.cancelButton {
+  background-color: rgb(180, 177, 175);
+}
