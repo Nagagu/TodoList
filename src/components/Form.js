@@ -31,7 +31,7 @@ function Form() {
 
   return (
     <>
-      <h1>Todo App</h1>
+      <h1>To-Do App</h1>
       <hr />
       {showTodoDiv ? (
         <>
