@@ -1,37 +1,51 @@
 import React, { useEffect, useState } from "react";
 import TodoAdd from "./TodoAdd";
 import TodoList from "./TodoList";
-import { DefaultButton, PrimaryButton } from "@fluentui/react";
+import { DefaultButton, PrimaryButton, Toggle } from "@fluentui/react";
 
 function Form() {
   const [showTodoDiv, setShowAddTodoDiv] = useState(false);
   const [showAllTodos, setShowAllTodos] = useState(true);
+  const [todos, setTodos] = useState([]);
+
+  useEffect(() => {
+    const url = process.env.REACT_APP_API_ENDPOINT + "ToDo/GetAll";
+    const url111 = process.env;
+    debugger;
+    fetch(url)
+      .then((o) => o.json())
+      .then((o) => setTodos(o));
+  }, []);
 
   const handleShowAddTodo = () => {
     setShowAddTodoDiv(!showTodoDiv);
   };
 
-  const handleShowUndoneTodos = () => {
-    setShowAllTodos(false);
+  const handleShowTodos = () => {
+    setShowAllTodos(!showAllTodos);
   };
 
-  const handleShowAllTodos = () => {
-    setShowAllTodos(true);
-  };
+  // const [todos, setTodos] = useState(
+  //   localStorage.getItem("todos")
+  //     ? JSON.parse(localStorage.getItem("todos"))
+  //     : []
+  // );
 
-  const [todos, setTodos] = useState(
-    localStorage.getItem("todos")
-      ? JSON.parse(localStorage.getItem("todos"))
-      : []
-  );
-
-  useEffect(() => {
-    localStorage.setItem("todos", JSON.stringify(todos));
-  }, [todos]);
+  // useEffect(() => {
+  //   localStorage.setItem("todos", JSON.stringify(todos));
+  // }, [todos]);
 
   return (
     <>
       <h1>To-Do App</h1>
+      <hr />
+      <Toggle
+        label={<div>Show tasks</div>}
+        onText="All"
+        offText="Pending"
+        onChange={handleShowTodos}
+        defaultChecked
+      />
       <hr />
       {showTodoDiv ? (
         <>
@@ -43,17 +57,16 @@ function Form() {
       ) : (
         <PrimaryButton onClick={handleShowAddTodo}>+ Add New</PrimaryButton>
       )}
-
       <TodoList
         todos={
-          showAllTodos ? todos : todos.filter((item) => item.done === false)
+          showAllTodos ? todos : todos.filter((item) => item.isDone === false)
         }
         setTodos={setTodos}
       />
-      <DefaultButton onClick={handleShowAllTodos}>Show All</DefaultButton>
+      {/* <DefaultButton onClick={handleShowAllTodos}>Show All</DefaultButton>
       <DefaultButton onClick={handleShowUndoneTodos}>
         Pending Tasks
-      </DefaultButton>
+      </DefaultButton> */}
     </>
   );
 }

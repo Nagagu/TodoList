@@ -4,6 +4,26 @@ import React, { useState } from "react";
 function TodoAdd({ todos, setTodos }) {
   const [inputText, setInputText] = useState("");
 
+  const addTodoPost = () => {
+    const newToDo = { description: inputText, isDone: false };
+
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Access-Control-Allow-Headers": "*",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newToDo),
+    };
+    fetch(process.env.REACT_APP_API_ENDPOINT + "ToDo/Add", requestOptions)
+      .then((o) => o.json())
+      .then((data) => {
+        debugger;
+        newToDo.id = data;
+        setTodos([...todos, newToDo]);
+      });
+  };
+
   const handleInputChange = (e) => {
     e.preventDefault();
     console.log(e.target.value);
@@ -12,14 +32,7 @@ function TodoAdd({ todos, setTodos }) {
 
   const handleAddTodo = (e) => {
     e.preventDefault();
-    setTodos([
-      ...todos,
-      {
-        id: new Date().getTime(),
-        description: inputText,
-        done: false,
-      },
-    ]);
+    addTodoPost();
     setInputText("");
   };
 

@@ -9,7 +9,7 @@ function TodoList({ todos, setTodos }) {
           <Todo
             key={item.id}
             description={item.description}
-            done={item.done}
+            done={item.isDone}
             todo={item}
             setTodos={setTodos}
           />
