@@ -10,8 +10,6 @@ function Form() {
 
   useEffect(() => {
     const url = process.env.REACT_APP_API_ENDPOINT + "ToDo/GetAll";
-    const url111 = process.env;
-    debugger;
     fetch(url)
       .then((o) => o.json())
       .then((o) => setTodos(o));
