@@ -3,6 +3,7 @@ import React, { useState } from "react";
 
 function TodoAdd({ todos, setTodos }) {
   const [inputText, setInputText] = useState("");
+  const [open, setOpen] = useState(false);
 
   const addTodoPost = () => {
     const newToDo = { description: inputText, isDone: false };
@@ -18,7 +19,6 @@ function TodoAdd({ todos, setTodos }) {
     fetch(process.env.REACT_APP_API_ENDPOINT + "ToDo/Add", requestOptions)
       .then((o) => o.json())
       .then((data) => {
-        debugger;
         newToDo.id = data;
         setTodos([...todos, newToDo]);
       });
@@ -32,6 +32,10 @@ function TodoAdd({ todos, setTodos }) {
 
   const handleAddTodo = (e) => {
     e.preventDefault();
+    if (inputText == "") {
+      alert("Please add a ToDo");
+      return;
+    }
     addTodoPost();
     setInputText("");
   };
@@ -44,6 +48,7 @@ function TodoAdd({ todos, setTodos }) {
         value={inputText}
         onChange={handleInputChange}
         type="text"
+        required
       />
       <PrimaryButton
         class="btn btn-outline-primary"
