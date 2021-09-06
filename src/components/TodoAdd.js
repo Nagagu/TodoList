@@ -3,7 +3,6 @@ import React, { useState } from "react";
 
 function TodoAdd({ todos, setTodos }) {
   const [inputText, setInputText] = useState("");
-  const [open, setOpen] = useState(false);
 
   const addTodoPost = () => {
     const newToDo = { description: inputText, isDone: false };
